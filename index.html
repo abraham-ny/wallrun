@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2efe8">
+  <meta name="description" content="Wall Run: outthink your rival, one square at a time.">
+  <title>Wall Run — Make your way</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+  <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Wall Run home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>WALL<span class="brand-light">RUN</span><small>TACTICAL RACE CLUB</small></span>
+      </a>
+      <div class="topbar-right">
+        <div class="currency" aria-label="Run tokens"><span class="token-icon">W</span><strong id="token-count">0</strong><span class="currency-label">TOKENS</span></div>
+        <button class="icon-button" id="sound-toggle" type="button" aria-label="Toggle sound" title="Toggle sound"><span aria-hidden="true">♪</span></button>
+        <button class="profile-button" id="profile-button" type="button"><span class="profile-dot"></span><span id="profile-name">ROOKIE</span><span class="profile-chevron">⌄</span></button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home-screen" class="home-screen">
+        <div class="home-main">
+          <div class="eyebrow"><span class="live-dot"></span><span id="season-label">SEASON 01 · THE LONG WAY HOME</span></div>
+          <h1>Every move<br>makes <em>your</em> way.</h1>
+          <p class="hero-copy">A little ground. A lot of nerve. Outrun the other side, or build a better route.</p>
+          <div class="home-actions">
+            <button class="button button-primary" id="continue-button" type="button"><span id="continue-label">START THE RUN</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+            <button class="button button-secondary" id="duel-button" type="button"><span class="duel-symbol" aria-hidden="true">◈</span> LOCAL DUEL <span class="button-key">2 PLAYERS</span></button>
+          </div>
+          <div class="home-divider"><span>YOUR NEXT CHAPTER</span><span class="divider-line"></span><span id="chapter-progress">01 / 06</span></div>
+          <button class="chapter-card" id="chapter-button" type="button">
+            <span class="chapter-number" id="chapter-number">01</span>
+            <span class="chapter-details"><strong id="chapter-title">First Footing</strong><span id="chapter-description">The city is yours to cross. Find the line.</span></span>
+            <span class="chapter-status" id="chapter-status">PLAY</span>
+            <span class="chapter-arrow" aria-hidden="true">→</span>
+          </button>
+          <div class="home-footer-note"><span class="keycap">W</span><span class="keycap">A</span><span class="keycap">S</span><span class="keycap">D</span><span class="keycap keycap-wide">ARROWS</span><span>MOVE · CLICK A GAP TO BUILD</span></div>
+        </div>
+
+        <aside class="home-side">
+          <div class="side-heading"><span>FIELD NOTES</span><span class="side-menu-dots">•••</span></div>
+          <div class="player-card">
+            <div class="card-kicker">YOUR RUNNER <span class="runner-level" id="runner-level">LV. 01</span></div>
+            <div class="runner-portrait" id="runner-portrait" aria-label="Current avatar"><span class="portrait-halo"></span><span class="portrait-head">●</span><span class="portrait-body"></span><span class="portrait-scarf"></span><span class="portrait-initial" id="portrait-initial">R</span></div>
+            <h2 id="runner-name">THE ROOKIE</h2>
+            <p class="runner-subtitle" id="runner-subtitle">New city. Clean slate.</p>
+            <div class="xp-line"><span>RUNNER XP</span><span id="xp-label">0 / 100</span></div>
+            <div class="xp-track"><span id="xp-bar"></span></div>
+          </div>
+          <div class="record-row">
+            <div class="record-cell"><span>WINS</span><strong id="win-count">00</strong></div>
+            <div class="record-cell"><span>WIN RATE</span><strong id="win-rate">—</strong></div>
+            <div class="record-cell"><span>BEST STREAK</span><strong id="streak-count">00</strong></div>
+          </div>
+          <button class="reward-strip" id="reward-button" type="button"><span class="reward-icon">▶</span><span><strong>WATCH &amp; EARN</strong><small>Pick up 60 Run Tokens</small></span><span class="reward-arrow">↗</span></button>
+          <div class="side-bottom"><span class="status-led"></span><span id="platform-status">SAVING ON THIS DEVICE</span><button id="leaderboard-button" type="button" class="text-button">LEADERBOARD ↗</button></div>
+        </aside>
+      </section>
+
+      <section id="game-screen" class="game-screen hidden" aria-label="Wall Run match">
+        <div class="game-topline">
+          <button class="back-button" id="back-button" type="button"><span aria-hidden="true">←</span> EXIT MATCH</button>
+          <div class="match-title"><span class="match-live"></span><span id="match-mode-label">CAMPAIGN · CHAPTER 01</span></div>
+          <button class="rules-button" id="rules-button" type="button" aria-label="How to play" title="How to play">?</button>
+        </div>
+        <div class="game-layout">
+          <div class="board-column">
+            <div class="board-status-row">
+              <div class="player-chip player-chip-blue" id="opponent-chip"><span class="player-avatar-mini">B</span><span><strong id="opponent-name">THE RIVAL</strong><small id="opponent-detail">10 WALLS · NORTH</small></span></div>
+              <div class="turn-banner" id="turn-banner"><span class="turn-pulse"></span><strong>YOUR TURN</strong><small id="turn-subtitle">MAKE IT COUNT</small></div>
+              <div class="player-chip player-chip-coral" id="active-chip"><span class="player-avatar-mini">R</span><span><strong id="active-name">THE ROOKIE</strong><small id="active-detail">10 WALLS · SOUTH</small></span></div>
+            </div>
+            <div class="board-wrap">
+              <div class="board-coordinate board-coordinate-top" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span></div>
+              <div class="board-coordinate board-coordinate-left" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+              <div id="board" class="board" role="grid" aria-label="Nine by nine Wall Run game board"></div>
+              <div class="board-coordinate board-coordinate-bottom" aria-hidden="true"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span><span>I</span></div>
+            </div>
+            <div class="board-hint" id="board-hint">CHOOSE A SQUARE TO MOVE, OR LAY A WALL</div>
+          </div>
+
+          <aside class="match-panel">
+            <div class="panel-section clock-section">
+              <div class="panel-kicker"><span>MOVE CLOCK</span><span class="clock-round" id="round-label">ROUND 01</span></div>
+              <div class="clock-display"><span id="clock-value">30</span><small>SEC</small><div class="clock-ring" id="clock-ring"><span></span></div></div>
+              <div class="clock-caption" id="clock-caption">Think fast. The clock is live.</div>
+            </div>
+            <div class="panel-section wall-section">
+              <div class="panel-kicker"><span>BUILD YOUR ROUTE</span><span class="wall-count-tag" id="wall-count-tag">10 LEFT</span></div>
+              <div class="wall-controls">
+                <button class="wall-mode active" id="move-mode" type="button"><span class="mode-icon move-icon">✣</span><span><strong>MOVE</strong><small>Step or jump</small></span><span class="mode-check">●</span></button>
+                <button class="wall-mode" id="horizontal-mode" type="button"><span class="mode-icon horizontal-icon"></span><span><strong>H WALL</strong><small>Block two lanes</small></span><span class="mode-check">●</span></button>
+                <button class="wall-mode" id="vertical-mode" type="button"><span class="mode-icon vertical-icon"></span><span><strong>V WALL</strong><small>Block two lanes</small></span><span class="mode-check">●</span></button>
+              </div>
+              <p class="wall-help" id="wall-help">Select a square you can reach this turn.</p>
+            </div>
+            <div class="panel-section tactic-section">
+              <div class="panel-kicker"><span>POCKET TACTICS</span><span class="perk-tag">ONE USE</span></div>
+              <button class="tactic-button" id="sprint-button" type="button"><span class="tactic-icon">⏱</span><span><strong>TIME SLIP</strong><small>+15 seconds · 1 use</small></span><span class="tactic-cost"><b>35</b><small>W</small></span></button>
+              <button class="tactic-button" id="extra-wall-button" type="button"><span class="tactic-icon tactic-wall-icon">╋</span><span><strong>SPARE WALLS</strong><small>+2 blockers · 1 use</small></span><span class="tactic-cost"><b>50</b><small>W</small></span></button>
+            </div>
+            <div class="match-footer"><span class="turn-count" id="turn-count">TURN 01</span><span class="turn-separator">·</span><span id="match-note">FIRST TO THE FAR SIDE</span></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span>WALLRUN CLUB © 2026</span><span>THE BOARD IS YOURS TO BEND.</span><button id="sound-footer" type="button">SOUND <span id="sound-state">ON</span></button></footer>
+  </div>
+
+  <dialog id="modal" class="modal">
+    <div class="modal-top"><span class="modal-kicker" id="modal-kicker">FIELD GUIDE</span><button id="modal-close" class="modal-close" type="button" aria-label="Close">×</button></div>
+    <div id="modal-content"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
